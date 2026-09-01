@@ -1,0 +1,65 @@
+#!/bin/tcsh -f
+
+
+echo
+echo
+echo " =================================================================="
+echo
+echo "                   B O L T S Y N T H                                "
+echo
+echo " ================================================================== "
+echo "  Author        : Harshitha Kalur"
+echo "  Company       : VLSI Design Corporation Pvt. Ltd."
+echo "  Description   :"
+echo "     A simple automation tool for synthesis and timing analysis."
+echo "     Takes RTL + SDC as input and generates synthesized netlist"
+echo "     and pre -layout timing information."
+echo "     Uses Yosys and OpenTimer for analysis."
+echo
+echo " ==================================================================="
+echo 
+echo
+set my_dir = 'pwd'
+
+# -------------------------------------------------------------------#
+# ---------------- Tool Initialization ------------------------------#
+# -------------------------------------------------------------------#
+
+# Check if exactly one argument (CSV file) is provided
+if ($#argv != 1) then
+    echo "BoltSynth Info: Please provide the CSV file."
+    echo "USAGE: ./boltsynth <csv file>"
+    exit 1
+endif
+
+set file = "$argv[1]"
+
+# Display help message
+if ("$file" == "-help") then
+    echo "USAGE: ./boltsynth <csv file>"
+    echo "CSV file must contain the following fields:"
+    echo "  Design Name, Output Directory, Netlist Directory, Library Path, Constraint File"
+    echo "Note: Field names are case-sensitive."
+    exit 0
+endif
+
+# Check if the provided file exists
+if (! -f "$file") then
+    echo "BoltSynth Error: Cannot find CSV file '$file' in current directory."
+    echo "Exiting the flow..."
+    exit 1
+endif
+
+# ------------------------------------------------------------
+#                   Launch TCL Synthesis
+# ------------------------------------------------------------
+
+echo "\nStarting BoltSynth Flow..."
+echo "Reading configuration from: $file\n"
+
+tclsh boltsynth.tcl "$file"
+
+echo "\nFlow completed successfully!"
+echo "------------------------------------------------------------"
+echo "Generated outputs available in the configured output directory."
+echo "------------------------------------------------------------\n"
