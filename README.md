@@ -13,7 +13,7 @@ The main objective was not just to execute individual EDA tools, but to understa
 
 
 ## DAY 1:  Creating a TCL command and pass .csv file from UNIX shell to tcl script
-
+ 
 ## Objective
 
 The first stage of Boltsynth establishes the interface between the Linux shell and the TCL automation script.
